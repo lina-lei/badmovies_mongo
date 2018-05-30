@@ -1,46 +1,28 @@
-// const mysql = require('mysql');
-// const mysqlConfig = require('./config.js');
-
-// const connection = mysql.createConnection(mysqlConfig);
-
-// const getAllFavorites = function(callback) {
-//   // get favorites from the database
-// };
-
-// const saveFavorite = function(callback) {
-//   // save movie to favorites in the database
-// };
-
-// const deleteFavorites = function(callback) {
-//   // delete a movie from favorites in the database
-// };
-
-// module.exports = {
-//   getAllFavorites,
-//   saveFavorite,
-//   deleteFavorite
-// };
-
-
+// REFACTOR TO USE MONGO INSTEAD OF MYSQL
 
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/badmovies');
+mongoose.connect('mongodb://localhost/app');
 
 var db = mongoose.connection;
 
-const movieSchema = mongoose.Schema({id: Number, title: String, release_date: Date, vote_average: Number, poster_path: String});
+const movieSchema = mongoose.Schema({id: {type: Number, unique: true}, title: String, release_date: Date, vote_average: Number, poster_path: String});
 
 const Movie = mongoose.model('Movie', movieSchema);
 
 const getAllFavorites = function(callback) {
   // get favorites from the database
+  // Movie.find()
+  // .then((err, data) => {
+  //   if(err) console.log('db err getting saved movies', err);
+  //   else callback(data)  
+  // });
 };
 
-const saveFavorite = function(callback) {
+const saveFavorite = function(movie, callback) {
   // save movie to favorites in the database
-  // const movie = new Movie({id: , title:, release_date: , vote_average: poster_path: });
-  // movie.save();
+  const movieRec = new Movie({id: movie.id, title: movie.title, release_date: movie.release_date, vote_average: movie.vote_average, poster_path: movie.poster_path});
+  movieRec.save().then(callback);
 };
 
 const deleteFavorite = function(callback) {

@@ -27,7 +27,8 @@ class App extends React.Component {
 
   saveMovie(movie) {
     // same as above but do something diff
-    // axios.post('/save', );
+    axios.post('/save', movie)
+    .then(() => console.log('movie was saved'));
   
   }
 
